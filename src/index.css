@@ -1,0 +1,105 @@
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Design tokens (DESIGN_AND_CODE_RULES.md) ─────────────────────────────── */
+@layer base {
+  :root {
+    /* shadcn CSS variable overrides — mapped to our palette */
+    --background: #F8FAFC;       /* bg token */
+    --foreground: #1E293B;       /* text token */
+    --card: #FFFFFF;             /* surface token */
+    --card-foreground: #1E293B;
+    --popover: #FFFFFF;
+    --popover-foreground: #1E293B;
+    --primary: #0F766E;          /* brand token */
+    --primary-foreground: #FFFFFF;
+    --secondary: #F1F5F9;
+    --secondary-foreground: #1E293B;
+    --muted: #F1F5F9;
+    --muted-foreground: #64748B; /* text-muted token */
+    --accent: #F1F5F9;
+    --accent-foreground: #1E293B;
+    --destructive: #DC2626;      /* status-severe token */
+    --border: #E2E8F0;           /* border token */
+    --input: #E2E8F0;
+    --ring: #0F766E;             /* brand token */
+    --radius: 0.5rem;            /* rounded-lg per rules */
+  }
+
+  * {
+    @apply border-border;
+    outline-color: rgb(15 118 110 / 0.5);
+  }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    @apply bg-bg text-text;
+    margin: 0;
+  }
+}
+
+/* ── Scrollbar ────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #F8FAFC; }
+::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
+
+/* ── Entrance animation ───────────────────────────────────────────────────── */
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.slide-in { animation: slideIn 0.3s ease-out forwards; }
+
+/* ── "● Live" badge pulse (CSS-only, map header) ─────────────────────────── */
+@keyframes live-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.55; transform: scale(0.85); }
+}
+.live-dot {
+  animation: live-pulse 1.6s ease-in-out infinite;
+}
+
+/* ── Severe pulse (alert banner icon) ────────────────────────────────────── */
+@keyframes pulse-red {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.55; }
+}
+.pulse-red { animation: pulse-red 1.8s ease-in-out infinite; }
+
+/* ── Leaflet Risk Marker Pulses ──────────────────────────────────────────── */
+@keyframes nerPulseSevere {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.65; transform: scale(1.18); }
+}
+
+@keyframes nerPulseHigh {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.75; transform: scale(1.09); }
+}
+
+.marker-severe-pulse {
+  animation: nerPulseSevere 1.8s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.marker-high-pulse {
+  animation: nerPulseHigh 2.6s ease-in-out infinite;
+  transform-origin: center;
+}
+
+/* Ensure Leaflet tiles show above the page bg ───────────────────────────── */
+.leaflet-container { 
+  background: #e5e7eb; 
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* ── RiskBadge tier colour transition ────────────────────────────────────── */
+.risk-badge {
+  transition: background-color 175ms ease, color 175ms ease, border-color 175ms ease;
+}
