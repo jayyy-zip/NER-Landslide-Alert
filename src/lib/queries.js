@@ -343,7 +343,7 @@ export async function updateSosStatus(sosId, newStatus) {
 
 // ─── 4. V3 AI Inference (FastAPI Integration) ────────────────────────────────
 
-const AI_API_URL = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_AI_API_URL) || 'http://localhost:8000'
+const AI_API_URL = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_AI_API_URL) || (typeof process !== 'undefined' ? process.env?.VITE_AI_API_URL : undefined) || 'https://ner-ai-api.onrender.com'
 
 /**
  * Run real-time V3 landslide risk inference via FastAPI inference service.
