@@ -2,7 +2,7 @@
 
 <p align="center">
   <strong>AI-assisted landslide risk monitoring & early warning for Northeast India</strong><br/>
-  <a href="https://ner-landslide-alert02.vercel.app/">Live Prototype</a> · 
+  <a href="https://ner-landslide-alert.onrender.com">Live Prototype</a> · 
   <a href="https://github.com/jayyy-zip/NER-Landslide-Alert">Repository</a>
 </p>
 
@@ -15,9 +15,9 @@
 
 ---
 
-## 🚨 What is LARS?
+## 🚨 What Is NER?
 
-**LARS (Landslide Alert & Response System)** is a location-aware disaster-risk platform designed to help citizens and authorities understand landslide risk along vulnerable highway corridors in Northeast India.
+**NER** is a location-aware disaster-risk platform designed to help citizens and authorities understand landslide risk along vulnerable highway corridors in Northeast India.
 
 For the prototype, the system is scoped to a **25 km NH-27 pilot corridor around Jatinga–Haflong, Dima Hasao, Assam**.
 
@@ -79,7 +79,7 @@ Historical Events   Rainfall   Terrain   Road/GPS   Citizen Reports
 
 ## 🧭 Citizen workflow
 
-1. Open LARS
+1. Open NER
 2. **Check My Safety**
 3. Share GPS location or select a point on the map
 4. View the nearby risk score and contributing factors
