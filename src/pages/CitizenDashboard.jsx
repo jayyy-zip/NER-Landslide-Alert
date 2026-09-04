@@ -19,7 +19,7 @@ import { RiskBadge } from '@/components/RiskBadge'
 import NHMap from '@/components/NHMap'
 import SOSModal from '@/components/SOSModal'
 import { useRiskZones } from '@/hooks/useRiskZones'
-import { getDynamicRiskExplanation } from '@/components/ZoneDrawer'
+import ZoneDrawer, { getDynamicRiskExplanation } from '@/components/ZoneDrawer'
 import { getRainfallFeatures, getWeatherDescription } from '@/lib/weather'
 import { predictRisk } from '@/lib/queries'
 import { cn } from '@/lib/utils'
@@ -45,6 +45,7 @@ export default function CitizenDashboard() {
   const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState('home') // 'home' | 'map' | 'report' | 'alerts' | 'profile'
   const [selectedZone, setSelectedZone] = useState(null)
+  const [compactDetailView, setCompactDetailView] = useState(null)
   const [geoZone, setGeoZone] = useState(null)
   const [userCoords, setUserCoords] = useState(null)
   const [geoStatus, setGeoStatus] = useState('detecting') // 'detecting' | 'located' | 'denied' | 'default'
@@ -105,6 +106,12 @@ export default function CitizenDashboard() {
 
   const handleSelectZone = useCallback((zone) => {
     setSelectedZone(zone)
+    setCompactDetailView(zone ? 'zone' : null)
+  }, [])
+
+  const handleCloseCompactDetail = useCallback(() => {
+    setCompactDetailView(null)
+    setSelectedZone(null)
   }, [])
 
   const loadWeather = useCallback(async ({ refresh = false } = {}) => {
@@ -252,7 +259,7 @@ export default function CitizenDashboard() {
               </div>
               {selectedZone && (
                 <button
-                  onClick={() => setSelectedZone(null)}
+                  onClick={handleCloseCompactDetail}
                   className="text-[11px] text-brand font-semibold hover:underline"
                 >
                   Reset to GPS
@@ -277,13 +284,25 @@ export default function CitizenDashboard() {
               {loading ? (
                 <Skeleton className="h-[240px] rounded-xl" />
               ) : (
-                <NHMap
-                  zones={zones}
-                  selectedZone={currentZone}
-                  onSelect={handleSelectZone}
-                  compact={true}
-                  showDrawer={true}
-                />
+                <div className="space-y-3">
+                  <NHMap
+                    zones={zones}
+                    selectedZone={selectedZone}
+                    onSelect={handleSelectZone}
+                    compact={true}
+                    showDrawer={false}
+                  />
+
+                  {selectedZone && compactDetailView && (
+                    <ZoneDrawer
+                      zone={selectedZone}
+                      detailView={compactDetailView}
+                      inline
+                      onOpenAnalysis={() => setCompactDetailView('analysis')}
+                      onClose={handleCloseCompactDetail}
+                    />
+                  )}
+                </div>
               )}
             </section>
 
@@ -333,7 +352,7 @@ export default function CitizenDashboard() {
                       NER V3 AI assessment · {currentZone.segment_id}
                     </span>
                     <button 
-                      onClick={() => setSelectedZone(currentZone)}
+                      onClick={() => handleSelectZone(currentZone)}
                       className="font-semibold text-brand hover:underline"
                     >
                       View Analysis →
@@ -479,7 +498,7 @@ export default function CitizenDashboard() {
                         <button
                           id={`btn-details-${zone.segment_id}`}
                           onClick={() => {
-                            setSelectedZone(zone)
+                            handleSelectZone(zone)
                             window.scrollTo({ top: 0, behavior: 'smooth' })
                           }}
                           className="text-xs font-bold text-brand hover:underline p-1"
@@ -537,7 +556,7 @@ export default function CitizenDashboard() {
                 <p className="text-xs text-text-muted">Interactive live telemetry of all 25 segments</p>
               </div>
               <button
-                onClick={() => setSelectedZone(null)}
+                onClick={handleCloseCompactDetail}
                 className="text-xs text-brand font-semibold hover:underline"
               >
                 Reset Selection

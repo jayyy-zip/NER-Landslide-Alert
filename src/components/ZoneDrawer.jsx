@@ -42,7 +42,7 @@ export function getDynamicRiskExplanation(zone) {
   return `Terrain gradient is ${slope}° with ${rain24}mm 24h rainfall. Monitored continuously by NER V3 AI models.`
 }
 
-export default function ZoneDrawer({ zone, detailView, onOpenAnalysis, onClose, className }) {
+export default function ZoneDrawer({ zone, detailView, onOpenAnalysis, onClose, className, inline = false }) {
   if (!zone || detailView === null) return null
 
   const tierKey = zone.risk_tier ? zone.risk_tier.toLowerCase() : 'normal'
@@ -55,7 +55,9 @@ export default function ZoneDrawer({ zone, detailView, onOpenAnalysis, onClose, 
       <div 
         id="zone-detail-popup"
         className={cn(
-          "absolute bottom-3 left-3 right-3 sm:right-auto sm:w-80 z-[1000] bg-surface/95 backdrop-blur-md rounded-xl p-4 shadow-card border border-border text-text transition-all duration-300 slide-in",
+          inline
+            ? "relative w-full bg-surface rounded-xl p-4 shadow-card border border-border text-text transition-all duration-300 slide-in"
+            : "absolute bottom-3 left-3 right-3 sm:right-auto sm:w-80 z-[1000] bg-surface/95 backdrop-blur-md rounded-xl p-4 shadow-card border border-border text-text transition-all duration-300 slide-in",
           className
         )}
       >
