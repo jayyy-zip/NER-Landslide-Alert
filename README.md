@@ -1,4 +1,4 @@
-# 🌧️ LARS — Landslide Alert & Response System
+# 🌧️ NER 
 
 <p align="center">
   <strong>AI-assisted landslide risk monitoring & early warning for Northeast India</strong><br/>
